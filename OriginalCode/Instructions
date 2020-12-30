@@ -1,3 +1,45 @@
 These are the instructions for the usage of the original code:
 
-Step 1: ...
+First run: ###################################
+1) grab_sites_correlation(_all_aminos).py  
+
+This script specifies:
+  - A test structure (i.e. s0) that represents the protein
+  - A start frame for sampling (i.e. 25,000 out of 100,000 to leave equilibration space)
+  - An end frame for sampling (i.e. 100,000 out of 100,000)
+  
+It will ignore "TER" and "END" strings
+A list of terminal sites is defined (e.g. ["","HIS A 306","GLU A 360","ASP A 665","THR A 720","LYS A1027","MET A1093","HIS A1398","THR A1452","LYS A1758","GLN A1823"])  
+
+For each frame (i.e. in 75,000) stores for each amino (i.e. 1823), the averaged COM (3 coordinates).
+  - This file is called BIG_traj.npy
+
+For each amino (i.e. 1823), the average position across all frames (mu), is calculated
+  - This file is called GIANTModel_Mus.npy
+
+For each amino (i.e. 1823), the spatial correlation matrix (U) is calculated across all frames (i.e. 75,000)
+The inverse (Uinv) is also calculated), only the U's are stored
+  - This file is called GIANTModel_Us.npy
+  
+The trajectory, is projected into the amino by amino cooridinates using the Us, and stored
+  - This file is called GIANTModel_Trajs.npy
+
+The script ends here
+###############################################
+
+
+Then run:
+2) generate_model_coefficients.py  
+
+
+Then run:
+3) generate_forces.py  
+
+
+Then run:
+4) calculate_positions.py
+
+
+Then run?? :
+5) write_impulse_model.py
+
