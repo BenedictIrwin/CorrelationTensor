@@ -27,19 +27,52 @@ The trajectory, is projected into the amino by amino cooridinates using the Us, 
 The script ends here
 ###############################################
 
-
-Then run:
+Then run: #########################################
 2) generate_model_coefficients.py  
 
+This script first loads the mus, Us and projected trajectory from above.
 
-Then run:
+It defines the rank 4 correlation tensor (K), and computes the elements by looking at paris of aminos and pairs of (p1,p2,p3) directions,
+where p1 ... are the principle components for each amino. 
+
+The elements are the pearson coorelation for (amino 1, direction 2, amino 3, direction 4) across the time (i.e. 75,000 frames) for the trajectory. 
+If one amino's principle axis motion is highly correlated with anothers across all frames, then they are likely gating, or in sync etc.
+The amino coordiantes mean we don't need to specify the actual directions for each amino.
+
+The K tensor is saved
+  - This file is called GIANTModel_Coeffs.npy
+
+###################################################
+
+Then run: #########################################
 3) generate_forces.py  
 
+This script generates a matrix of input forces on the protein. 
+For the paper, we wanted to apply these to the binding site, and the directiosn were defined by the differences in crystal structure
+taken from the open and closed states.
 
-Then run:
+
+
+###################################################
+
+
+Then run: #########################################
 4) calculate_positions.py
 
+Given the set of input 'forces' i.e. "impulses" to apply to the protein, this script simply contracts the forces and correlation tensor to give the 
+resulting "response" of the protein, i.e. how the protein might move. 
 
-Then run?? :
+The outputs are stored
+  - The file is called GIANTModel_Deltas.npy
+
+###################################################
+
+Then run?? : ######################################
 5) write_impulse_model.py
 
+This script produces .pdb files of the moving protein under the response of the impulse. 
+This essentially means the deltas file from the previous step and a base model of the protein (mus), are used to linearly 
+interpolate from the mu structure (0 impulse) to the perturbed structure (full impulse).
+
+This allows subsequent inspection and other analysis scripts to be run... 
+###################################################
