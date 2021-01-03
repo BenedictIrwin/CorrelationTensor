@@ -2,3 +2,5 @@ This is an upload of the code used for the paper: Functional movements of the GA
 https://pubs.rsc.org/en/content/articlelanding/2020/cp/d0cp01128b#!divAbstract
 
 The files create a correlation tensor model associated with the outputs of a CRANKITE simulation of the GABA-A receptor
+
+The code is stored in the folder down:
